@@ -183,7 +183,15 @@ def check_status(key,link,index):
         msg = result['msg']
         # print(f"账号【{str(index+1)}】避免并发,本次延迟{index*2}秒,上传服务器[{result['msg']}]")
         # time.sleep(index*2)
-        result = ss.get(f'https://wxpusher.zjiecode.com/demo/send/custom/{key}?content=检测文章-{name}%0A请在{tsleep}秒内完成验证!%0A%3Cbody+onload%3D%22window.location.href%3D%27{quote(link)}%27%22%3E').json()
+        data = {
+            "content": f"请在{tsleep}秒内完成验证!",
+            "name": key,
+            "project": f"检测文章-{name}",
+            "tmpl_name": "林夕监测助手",
+            "url": f"{quote(link)}"
+        }
+        result = requests.post(callback,json=data).json()['msg']
+        #result = ss.get(f'https://wxpusher.zjiecode.com/demo/send/custom/{key}?content=检测文章-{name}%0A请在{tsleep}秒内完成验证!%0A%3Cbody+onload%3D%22window.location.href%3D%27{quote(link)}%27%22%3E').json()
         print(f"账号【{str(index+1)}】微信消息推送[{msg}]: {result['msg']},等待40s完成验证!")
         for i in range(10):
             result = ss.get(callback+f"/select_task/{imei}/{uuid}").json()
