@@ -190,7 +190,7 @@ def check_status(key,link,index):
             "tmpl_name": "林夕监测助手",
             "url": f"{quote(link)}"
         }
-        result = requests.post(callback,json=data).json()['msg']
+        result = requests.post(callback,json=data).json()
         #result = ss.get(f'https://wxpusher.zjiecode.com/demo/send/custom/{key}?content=检测文章-{name}%0A请在{tsleep}秒内完成验证!%0A%3Cbody+onload%3D%22window.location.href%3D%27{quote(link)}%27%22%3E').json()
         print(f"账号【{str(index+1)}】微信消息推送[{msg}]: {result['msg']},等待40s完成验证!")
         for i in range(10):
